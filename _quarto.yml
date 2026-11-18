@@ -1,0 +1,19 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - .nojekyll
+
+website:
+  title: "Quarto Live Course Embeds"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: lessons/python-control.qmd
+        text: Control statemetns in Python
+
+format:
+  live-html:
+    theme: cosmo
+    toc: true
