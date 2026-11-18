@@ -23,7 +23,7 @@ There are two possible values in the Boolean type: `True` and `False`. These val
 
 ```{pyodide}
 #| autorun: false
-## 9 is less than or equal to 4. True or false?
+## 9 is less than or equal to 3. True or false?
 9 <= 3
 ```
 
@@ -75,7 +75,7 @@ x = 10
 y = 5
 
 ## Is x larger than y and is x cleanly divisible by y?
-a > b and a % b == 0
+x > y and x % y == 0
 ```
 
 ```{pyodide}

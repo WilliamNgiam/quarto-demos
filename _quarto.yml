@@ -11,7 +11,7 @@ website:
       - href: index.qmd
         text: Overview
       - href: lessons/python-control.qmd
-        text: Control statemetns in Python
+        text: Control statements in Python
 
 format:
   live-html:
