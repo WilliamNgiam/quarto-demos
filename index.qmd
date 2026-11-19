@@ -1,6 +1,6 @@
 ---
-title: "Interactive Course Modules"
-subtitle: "Quarto Live + GitHub Pages + Canvas LMS Starter"
+title: "Interactive Python and R Course Modules"
+subtitle: "Written by William XQ Ngiam"
 engine: markdown
 ---
 
@@ -10,8 +10,8 @@ This site hosts interactive, serverless course modules powered by [**Quarto Live
 
 Each lesson page hides the top navigation bar (`navbar: false`) so it embeds cleanly inside a Canvas LMS course page:
 
-1. [**Python Demo: Damped Harmonic Oscillator**](lessons/python-lesson.qmd) — Reactive sliders (`{ojs}` + `{pyodide}`), editable notebook cells, and a self-check exercise with hints & solution.
-2. [**R Demo: Central Limit Theorem Explorer**](lessons/r-lesson.qmd) — Interactive `{webr}` simulation using automatic `postMessage` communication for cross-origin Canvas iframes.
+1. [**Control statements in Python**](lessons/python-control.qmd) – covers Boolean logic, `in`, `if`, `else`, `elif`, and `for` loops.
+2. [**Getting started with NumPy**](lessons/python-numpy.qmd) – covers importing NumPy, `ndarray`, and some array operations.
 
 ---
 

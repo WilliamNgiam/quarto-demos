@@ -1,0 +1,159 @@
+---
+title: "Getting started with NumPy"
+engine: markdown
+format:
+  live-html:
+    navbar: false
+    toc: false
+pyodide:
+  packages:
+    - numpy
+    - matplotlib
+---
+
+## 1. What is NumPy?
+
+At the top of many data analysis scripts in cognitive neuroscience, you will often see `import numpy as np`. NumPy is one of the most commonly used Python packages across data science and cognitive neuroscience. It provides useful functions for basic statistical analysis, and in particular, a class called the _n-dimensional arrays_.
+
+`import numpy as np` loads the NumPy package into your working environment, and sets a shorthand to call its functions. The standard is to set the shorthand as `np`. To use a function from NumPy, you would then write `np.` and then the name of the function; for example, `np.array` creates an array of the elements provided to the function.
+
+```{pyodide}
+# Loads the NumPy package into your analysis
+# Specific NumPy functions are called using `np`
+import numpy as np
+
+# Find the mean and standard deviation of a list of numbers
+numbers = np.array([30, 13, 97, 59, 24])
+print("Mean: ", np.mean(numbers))
+print("Standard deviation: ", np.std(numbers))
+```
+
+---
+
+## 2. Defining n-dimensional arrays
+
+In cognitive neuroscience, you wil come across many matrices or n-dimensional arrays. Think about the EEG data that you have come across in this course – it is raw voltage values across each of the eletrode channels, at each timepoint, for each trial or epoch. This data will often be arranged as `channels x timepoints x trials` – a 3-dimensional matrix.
+
+The `ndarray` has some defined characteristics:
+
+- Each element in the array must be the same type.
+- The total size of the array cannot be changed.
+- The array must be "rectangular" – every row has the same number of elements, every column has the same number of elements, every *n*th dimension has the same number of elements.
+
+It is pivotal to understand the shape of the data array that you are working with. The `shape` function returns the number of elements in each dimension of the array, starting with the number of rows then the number of columns, and so forth. (One helpful cue – "**r**oman **c**atholics", it's always **r**ows and then **c**olumns.) The `size` function returns the number of elements in the entire array.
+
+```{pyodide}
+import numpy as np
+
+# Create a 2-dimensional array 
+my_array = np.array([[2, 5, 8],
+                    [3, 9, 6]])
+print(my_array)
+
+# Retrieve the shape of the array
+np.shape(my_array)
+
+# Retrieve the number of elements in the array
+np.size(my_array)
+```
+
+There are many different ways to access a specific element in an array using the standard square bracket indexing. Remember that Python uses zero-indexing so if you want the first element in an array, you would need to call the _0th_ element (e.g. `array[0]`). To index a single element in an array, you have to provide the co-ordinates of that exact element. To retrieve a row or a column, you can provide a value only for that particular dimension.
+
+```{pyodide}
+import numpy as np
+
+# Create a 2-dimensional array 
+my_array = np.array([[2, 5, 8],
+                    [3, 9, 6]])
+
+# Find the 3rd element in the top row
+print("The third element in the top row is:")
+print(my_array[0,2])
+
+# Retrieve the second row
+print("The second row is:")
+print(my_array[1])
+
+# Retrieve the third column
+print("The third column is:")
+print(my_array[:,2]) # Note the syntax and the arrangement of the output
+
+# Retrieve the first and third columns only
+print("The first and third columns are:")
+print(my_array[:,[0,2]])
+
+```
+
+Note that arrays can be overwritten – **be careful!**. Using the same indexing as above, we can insert a new value for a particular element or rewrite a particular slice of the matrix.
+
+```{pyodide}
+import numpy as np
+
+# Create an array of numbers
+my_numbers = np.array([3,9,4,0,2,5])
+print(my_numbers)
+
+# Rewrite the 1st element in the array
+my_numbers[0] = 8
+print(my_numbers)
+```
+
+This operation can change the array in an unintuitive manner, and it won't turn up an error message. This could be a so-called _silent error_ where the code executes but does not achieve the desired result!
+
+```{pyodide}
+import numpy as np
+
+# Create an array of numbers
+my_numbers = np.array([3,9,4,0,2,5])
+print(my_numbers)
+
+# Create a slice of the second-half of the array
+my_slice = my_numbers[3:5]
+print(my_slice)
+
+# Change the first number in the *slice*
+my_slice[0] = 42
+
+# What do we think happened to the **original array**?
+print(my_numbers)
+```
+
+Surprise! Changing a slice of the array will also change the original array! This is because the slice creates a _view_ of the original array rather than a _copy_, so any changes to the slice are reflected in the original array. This can be useful if intended, or problematic if **not intended**; you want to be very careful not to overwrite any original data unknowingly!
+
+We can also combine two arrays together using the `concatenate` function to join along an existing axis or the `stack` function to join and create a new axis.
+
+```{pyodide}
+import numpy as np
+x = np.array([1,2,3,4])
+y = np.array([5,6,7,8])
+
+# Concatenate x and y together
+print("Concatenate arrays:")
+print(np.concatenate((x, y)))
+
+# Stack x and y to form a 2-d array
+print("Stack arrays:")
+print(np.stack((x,y)))
+```
+
+## 3. Operations over arrays
+
+We want to perform functions across the entire array at once.
+
+```{pyodide}
+import numpy as np
+
+# Define 2-D array
+x = np.array([[1,2,3,4],
+             [5,6,7,8]])
+
+# Calculate the grand mean
+print(np.mean(x))
+
+# The axis argument collapses the specified dimension
+# Get the mean of each row
+print(np.mean(x, axis = 1))
+
+# Get the mean of each column
+print(np.mean(x, axis = 0))
+```

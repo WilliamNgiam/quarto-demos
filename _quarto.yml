@@ -12,7 +12,8 @@ website:
         text: Overview
       - href: lessons/python-control.qmd
         text: Control statements in Python
-
+      - href: lessons/python-numpy.qmd
+        text: Getting started with NumPy
 format:
   live-html:
     theme: cosmo
