@@ -8,252 +8,107 @@ format:
 pyodide:
   packages:
     - numpy
-    - matplotlib
+    - datetime
 ---
 
-## 1. Boolean logic
+## 1. What are f-strings?
 
-There are two possible values in the Boolean type: `True` and `False`. These values from the basis of logic statements and are useful in any programming language. Press the "Run Code" button in each of the following code chunks – does the output match your expectations?
+The f-string is a simple and efficient way of formatting text in Python. Researchers often use f-strings for incorporating variables from the analysis into an output.
+
+Creating a f-string is very straightforward – simply add a `f` at the beginning of text. With the f-string, you can add variables (or even execute functions) using curly brackets `{}` as placeholders. 
 
 ```{pyodide}
 #| autorun: false
-## 5 is greater than 3. True or false?
-5 > 3
+# Retrieve today's date and time.
+import datetime
+today = datetime.datetime.today()
+
+# Print the result as a f-string.
+# %B stands for the Month, %d for the day, %Y for the Year.
+print(f"Today's date is {today:%B %d, %Y}")
+```
+
+## 2. Formatting outputs in f-strings
+
+We can format the text using functions or modifiers. There are a set of standard modifiers that can be added at the end of the particular inserted value, such as `:d` for decimal format or `:,` to delineate thousands with commas. The most common modifier you will encounter is rounding float values; for example, `:.2f` rounds the output to 2 decimal places, as per APA formatting.
+
+```{pyodide}
+#| autorun: false
+dog = "labradors"
+# Includes the upper() function in the f-string
+txt = f"I love {dog.upper()}"
+print(txt)
 ```
 
 ```{pyodide}
 #| autorun: false
-## 9 is less than or equal to 3. True or false?
-9 <= 3
+import numpy as np
+trials_per_condition = [39, 47, 34, 43, 53, 30, 43]
+
+# What was the average number of trials per condition?
+print(f"The average number of trials per condition is {np.mean(trials_per_condition)}")
+# :.2f modifies the output to 2 decimal places.
+print(f"The average number of trials per condition is {np.mean(trials_per_condition):.2f}")
 ```
 
+Another handy way to format f-strings is to simply include `=` after the named variable. This then prints out the variable name alongside the value.
+
 ```{pyodide}
-#| autorun: false
-## 6 divided by 2 is equal to 3. True or false?
-6 / 2 == 3
+n_trials = 60
+n_conditions = 5
+
+print(f"{n_trials=} per {n_conditions=}")
+
 ```
 
+## 3. Working with dictionaries and f-strings
+
+We can easily access values within a dictionary via f-strings, using the same indexing method that you were shown at the start of the course.
+
 ```{pyodide}
-#| autorun: false
-## 256 is not divisible by 6. True or false?
-## Note: The % is known as the modulo operator – it finds the remainder after dividing the first number by the second number.
-## Note: The != is known as the not equal comparison operator.
-256 % 6 != 0
+experiment = {
+    "exp_name": "working_memory_decoding",
+    "trials": 400,
+    "set-sizes": [2, 4, 6]
+}
+
+print(f"In the {experiment['exp_name']} experiment, there are {experiment['trials']} at each of the set-sizes ({experiment['set-sizes']})")
+
 ```
 
----
+## 4. Exercise - Fixing common errors in f-strings
 
-Note that the Boolean values `True` and `False` have numerical values as well;  `True` is `1` and `False` is `0`. 
-
-```{pyodide}
-#| autorun: false
-True == 1
-```
+There are a few common errors that programmers make when working with f-strings. Can you spot the error and fix it? (Hint: Run the code blocks below to see the **error message**, which will tell you what went wrong.)
 
 ```{pyodide}
-#| autorun: false
-## This is for demonstration only; this is typically not good practice!
-False + 3
-```
-
----
-
-We can combine logic statements using the `and` and `or` operator. The `and` operator returns `True` when both statements are `True`, and `False` if at least one of the statements is `False`. The `or` operator returns `True` if either one of the statements is `True` and returns `False` if both statements are `False`.
-
-The following truth table shows the result of the `and` and `or` operator when _P_ or _Q_ are either true (T) or false (F) statements.
-
-| _P_ | _Q_ | _P_ `and` _Q_ | _P_ `or` _Q_ |
-| :---: | :---: | :---: | :---: |
-| T | T | T | T |
-| T | F | F | T |
-| F | T | F | T |
-| F | F | F | F |
-
-```{pyodide}
-#| autorun: false
-x = 10
-y = 5
-
-## Is x larger than y and is x cleanly divisible by y?
-x > y and x % y == 0
-```
-
-```{pyodide}
-#| autorun: false
-lucy_grade = 85
-martin_grade = 65
-
-## Did either Lucy or Martin achieve higher than a distinction?
-lucy_grade > 75 or martin_grade > 75
-```
----
-
-## 2. The `in` operator
-
-The `in` operator is very useful in Python as it checks for elements in memberships within lists.
-
-```{pyodide}
-#| autorun: false
-fave_numbers = [12, 26, 42, 125]
-
-## Is 38 one of my fave numbers?
-38 in fave_numbers
-```
-
-```{pyodide}
-#| autorun: false
-quote = "I'm sure the universe is full of intelligent life. It's just been too intelligent to come here."
-
-## Is universe a word in the above quote?
-"universe" in quote
-```
----
-
-### 3. The `if` and `else` and `elif` conditional statements
-
-The `if` operator is a **control** statement; it can determine whether or when certain functions in your script are executed or not. The `if` is placed at the start of the line and followed by a conditional statement (like the ones that you have been working with in the above exercises). If the conditional statement is `True` then it runs the subsequent lines within the "if loop"; if the conditional statement is `False`, it will not run those lines. Note that the `if` statement needs to end with a colon (`:`), and it is good practice to **indent** the following lines that will be executed.
-
-Add a number of your choice to the following code before running the code chunk. Test whether the output matches what you expect!
-
-```{pyodide}
-#| exercise: ex_if
+#| exercise: ex_curly
 #| solution: false
 
-number = ______
+course_code = "PSYC2032"
 
-if number < 0:
-    print("The number is negative")
+print(f"The course code is {course_code})
 
-if number > 0:
-    print("The number is positive")
-
-if number == 0:
-    print("The number is zero")
 ```
 
-The above code chunk executes three separate if loops – if a conditional statement is not met, the code in the loop is not executed. As our conditional statements are mutually exclusive (only one can be true at a time), the code prints out one line of output. While this works, it is inefficient because three loops need to be executed for each number that is tested; if we need to run such an operation across many, many numbers (for example, across many trials in an EEG experiment), this becomes very time-consuming!
-
-If there are two possible outcomes (i.e. `True` or `False`) of the conditional statement, we can use the `else` operator to define the desired code when the condition is **not met**. It has to be placed underneath the `if` statement, like so (and remember the `:`):
-
 ```{pyodide}
-#| exercise: ex_else
+#| exercise: ex_name
 #| solution: false
+fave_subject = "cog neuro"
 
-number = ______
+print(f"My fave subject is {favesubject}")
 
-if number % 2 == 0:
-    print("The number is even")
-else:
-    print("The number is odd.")
-```
-
-If we have a few possible outcomes, we can use the `elif` operator, which stands for "else if". `elif` statements are evaluated when the initial `if` statement is not met, and provide another conditional for when the attached lines of code should be run. That is, the `elif` section defines code that runs when the first `if` statement is not met, but the attached conditional is met. 
-
-The following code chunk combines `if`, `elif` and `else` into one loop – move the slider and then check how the output reacts. Think through the logic of the loop to make sure you understand.
-
-```{ojs}
-//| echo: false
-secret_number = 58
-
-viewof guess = Inputs.range([1,100], {
-  value: 1,
-  step: 1,
-  label: "Guess a number (1–100):"
-},
-{
-  submit: "Run Code"
-})
 ```
 
 ```{pyodide}
-#| input: [guess, secret_number]
-#| autorun: false
-#| exercise: ex_elif
-#| solution: false
+paper = {
+    "title": "Item-based Parsing of Dynamic Scenes in a Combined Attentional Tracking and Working Memory Task",
+    "authors": ["Piotr P. Styrkowiec", "William X. Q. Ngiam", "Will Epstein", "Ron Gneezy", "Henry M. Jones", "Edward Awh", "Edward K. Vogel"],
+    "journal": "Journal of Cognitive Neuroscience",
+    "year": 2026,
+    "volume": 38,
+    "issue": 2,
+    "doi": "10.1162/JOCN.a.96"
+}
 
-print("You guessed: ", guess)
-if guess < secret_number:
-    print("The secret number is larger")
-elif guess > secret_number:
-    print("The secret number is smaller")
-else:
-    print("You guessed the secret number!")
+print(f"{paper['authors'][0]} et al. {paper['year']} published a cool study in the {paper['journal']} on neural signatures during multiple-object tracking called '{paper['name']}'.")
 ```
-
----
-
-## 4. `for` loops
-
-The `for` loop is used to repeat a set of code functions over a sequence, such as a list or a tuple. These loops are evaluated for a given number of iterations, often the length of the list using the `in` operator that you learnt earlier. Like the `if` statement from earlier, you start the loop with the `for` followed by the sequence.
-
-```{pyodide}
-#| autorun: false
-sentence = ["A","fox","jumped","over","the","lazy","dog."]
-
-for word in sentence:
-  print(word)
-
-```
-
-The sequence can also be coded to loop a specific number of times. Make sure you understand how the output of the following code chunk is produced:
-
-```{pyodide}
-#| autorun: false
-value = 0
-
-## This loops ten times but note that Python indexes from zero!
-for n in range(10):
-  value += n
-  print(value)
-```
-
-The `for` loop can be combined with the `else` to run code when the loops have finished iterating:
-
-```{pyodide}
-#| autorun: false
-value = 0
-
-## This loops six times but note that Python indexes from zero!
-for n in range(6):
-  value += n
-  print("Working...")
-else:
-  print("Done! The total sum is: ", value)
-```
-
----
-
-## 5. Challenge
-
-Write a program that successfully completes the "FizzBuzz" game from 1 to 30. When there is a multiple of three, the program should `print` "Fizz" and not the number. When there is a multiple of 5, the program should `print` "Buzz" and not the number. When there is a multiple of both three and five, `print` "FizzBuzz" instead of the number. Can you do it?
-
-```{pyodide}
-#| exercise: ex_fizzbuzz
-# Write your code below!
-
-
-
-```
-
-::: { .solution exercise="ex_fizzbuzz" }
-```{pyodide}
-#| exercise: ex_fizzbuzz
-#| solution: true
-# Iterate through numbers from 0 to 30 using the range function
-for n in range(31):
-    # Check if the current number is divisible by both 3 and 5 (i.e., divisible by 15)
-    if n % 3 == 0 and n % 5 == 0:
-        # If divisible by both 3 and 5, print "fizzbuzz" and continue to the next iteration
-        print("fizzbuzz")
-    # Check if the current number is divisible only by 3
-    elif n % 3 == 0 and n % 5 != 0:
-        # If divisible only by 3, print "fizz" and continue to the next iteration
-        print("fizz")
-    # Check if the current number is divisible only by 5
-    elif n % 5 == 0 and n % 3 != 0:
-        # If divisible only by 5, print "buzz" and continue to the next iteration
-        print("buzz")
-    # If the number is neither divisible by 3 nor 5, print the number itself
-    print(n) 
-```
-:::
